@@ -1,0 +1,95 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <SyncToOfflineSchemaModel>True</SyncToOfflineSchemaModel>
+	<TargetFramework>net6.0</TargetFramework>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <OutputPath>bin\</OutputPath>
+    <Version>1.0.0.0</Version>
+    <Copyright>Copyright ©  2022</Copyright>
+    <Configurations>Debug;Release;Local;Quality</Configurations>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Update="Web.config">
+      <SubType>Designer</SubType>
+	  <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.2.0" />
+    <PackageReference Include="Microsoft.IO.RecyclableMemoryStream" Version="2.2.0" />
+    <PackageReference Include="OpenIddict.Validation.AspNetCore" Version="3.1.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\BroadVoicePOC.Common\BroadVoicePOC.Common.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\BroadVoicePOC.DataAccess.Core\BroadVoicePOC.DataAccess.Core.csproj" />
+    <ProjectReference Include="..\..\Logic\BroadVoicePOC.Business\BroadVoicePOC.Business.csproj" />
+    <ProjectReference Include="..\..\Common\BroadVoicePOC.Model\BroadVoicePOC.Model.csproj" />
+  </ItemGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Local'">
+	<DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <OutputPath>bin\</OutputPath>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+	<EnvironmentName>Local</EnvironmentName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+	<DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <OutputPath>bin\</OutputPath>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+	<EnvironmentName>Debug</EnvironmentName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Quality'">
+    <OutputPath>bin\</OutputPath>
+    <Optimize>true</Optimize>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+	<EnvironmentName>Quality</EnvironmentName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <OutputPath>bin\</OutputPath>
+	<Optimize>true</Optimize>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+	<EnvironmentName>Release</EnvironmentName>
+  </PropertyGroup>
+  <Choose>
+	<When Condition="'$(Configuration)' == 'Local'">
+      <ItemGroup>
+        <Content Update="appsettings.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
+		<Content Update="appsettings.Local.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
+		<Content Update="appsettings.Debug.json" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
+		<Content Update="appsettings.Quality.json" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
+        <Content Update="appsettings.Release.json" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
+      </ItemGroup>
+    </When>
+    <When Condition="'$(Configuration)' == 'Debug'">
+      <ItemGroup>
+		<Content Update="appsettings.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
+		<Content Update="appsettings.Local.json" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
+		<Content Update="appsettings.Debug.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
+		<Content Update="appsettings.Quality.json" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
+        <Content Update="appsettings.Release.json" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
+      </ItemGroup>
+    </When>
+	<When Condition="'$(Configuration)' == 'Quality'">
+      <ItemGroup>
+        <Content Update="appsettings.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
+		<Content Update="appsettings.Local.json" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
+		<Content Update="appsettings.Debug.json" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
+		<Content Update="appsettings.Quality.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
+        <Content Update="appsettings.Release.json" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
+      </ItemGroup>
+    </When>
+	<When Condition="'$(Configuration)' == 'Release'">
+      <ItemGroup>
+        <Content Update="appsettings.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
+		<Content Update="appsettings.Local.json" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
+		<Content Update="appsettings.Debug.json" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
+		<Content Update="appsettings.Quality.json" CopyToOutputDirectory="Never" CopyToPublishDirectory="Never" />
+        <Content Update="appsettings.Release.json" CopyToOutputDirectory="Always" CopyToPublishDirectory="Always" />
+      </ItemGroup>
+    </When>
+  </Choose>
+</Project>
